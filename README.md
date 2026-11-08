@@ -1,3 +1,5 @@
+> **Current maintained source:** [open the Noah branch](https://github.com/LucasXlab/diffnote/tree/noah/diffnote#readme) · [简体中文](https://github.com/LucasXlab/diffnote/blob/noah/diffnote/README.zh-CN.md). This `main` branch retains the older 0.1 interface. Follow the explicit branch installation on the maintained README for the new-file report export and reviewed Git handling.
+
 <p align="center"><img src="assets/logo.svg" width="72" height="72" alt="diffnote logo"></p>
 <h1 align="center">diffnote</h1>
 <p align="center"><strong>Turn local Git changes into a reviewable pull request summary.</strong></p>

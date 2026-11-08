@@ -1,3 +1,5 @@
+> **当前维护源码：**[前往 Noah 分支](https://github.com/LucasXlab/diffnote/blob/noah/diffnote/README.zh-CN.md) · [English](https://github.com/LucasXlab/diffnote/tree/noah/diffnote#readme)。本 `main` 分支保留旧 0.1 接口；请按维护版 README 明确选择分支安装，使用报告新建导出和经过修订的 Git 处理。
+
 <p align="center"><img src="assets/logo.svg" width="72" height="72" alt="diffnote logo"></p>
 <h1 align="center">diffnote</h1>
 <p align="center"><strong>将本地 Git 改动整理成便于审阅的 PR 摘要。</strong></p>
