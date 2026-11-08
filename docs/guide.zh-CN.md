@@ -4,15 +4,12 @@
 
 # diffnote
 
+请按 [README](../README.zh-CN.md#快速开始)明确安装 `noah/diffnote` 分支；`main` 仍包含旧接口。
+
+用 `diffnote --staged --markdown --output pr-draft.md`（或 `--save`）保存草稿，格式必须为 Markdown 或 JSON。输出以私有权限原子新建，拒绝已有文件和符号链接；分析失败不创建报告。发布前核对事实，补充修改原因和实际验证。
+
 **从眼前这份改动，开始写 PR 说明。**
 
-<p align="center">
-<img src="../assets/badges/source.svg" alt="Source 0.1.0">
-<img src="../assets/badges/python.svg" alt="Python 3.11+">
-<img src="../assets/badges/license.svg" alt="MIT license">
-<img src="../assets/badges/ci.svg" alt="CI prepared">
-<img src="../assets/badges/stars.svg" alt="Stars pending">
-</p>
 
 把本地 Git 变更整理为可审阅草稿：改动区域、文件元数据、增删行数和有来源的复核线索。无需模型、API key 或服务器。
 
@@ -22,7 +19,7 @@
 
 真实本地 CLI 录制渲染为可读面板；GIF 为阅读增加 8–10 秒停留，并将 JSON 分页。没有编造打字或程序输出。[静态首图](../assets/demo.png) · [未修改的 cast](../assets/recording/showcase.cast) · [完整文本](../assets/recording/showcase.txt) · [来源与复现](../docs/showcase.md)。
 
-五枚本地徽章仅说明源码元数据和已准备的配置；CI 不表示远端已通过，Stars 为 pending。
+当前工作流结果请查看仓库 Actions。
 ## 从 diff 到值得修改的第一稿
 
 改了一个函数与对应测试，`git diff --stat` 告诉你大小；diffnote 把可见变更分组为草稿，并提供文件级复核依据。工作树和暂存区草稿的标题来自当前改动，不借用无关旧提交。

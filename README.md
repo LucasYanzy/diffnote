@@ -18,11 +18,28 @@ The diff tells you what changed; a PR still needs a useful explanation. diffnote
 
 Python 3.11+ and Git 2.31+ on macOS or Linux. The demo uses disposable synthetic Git data; installation may download build tools.
 
+The `0.2` source is on `noah/diffnote`; the repository's `main` branch still contains the older `0.1` interface. Select the branch explicitly:
+
 ```bash
+git clone --branch noah/diffnote https://github.com/LucasXlab/diffnote.git
+cd diffnote
 python3 -m venv .venv
-.venv/bin/python -m pip install .
-.venv/bin/python scripts/demo.py
+. .venv/bin/activate
+python -m pip install .
+python scripts/demo.py
 ```
+
+Keep the environment active, enter your project, and select the changes you want to describe:
+
+```bash
+cd /absolute/path/to/your/repo
+git diff --cached --stat
+diffnote --staged --markdown --output pr-draft.md
+```
+
+Open `pr-draft.md`, confirm the changed files and counts, then add **why** you made the change and the validation you ran. No selected changes produces an empty draft; it does not establish that the working tree is clean. `--output` (alias `--save`) creates a private new file and refuses to overwrite an existing file; analysis errors create no output. Use a different filename for the next draft.
+
+The `0.2` interface runs without model calls and does not provide the old `--llm` or `--color` options. `--no-color`, Markdown and JSON remain available.
 
 ## Usage
 
@@ -32,7 +49,7 @@ python3 -m venv .venv
 diffnote --staged --markdown
 ```
 
-Activate `.venv` first. This selects the index. Without `--staged`, tracked working-tree changes include staged edits; untracked files enter the report only after staging.
+This selects the index. Without `--staged`, tracked working-tree changes include staged edits; untracked files enter the report only after staging.
 
 ### Select a branch comparison or structured output
 

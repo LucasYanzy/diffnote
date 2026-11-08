@@ -3,6 +3,8 @@
 import argparse
 import os
 import sys
+import tempfile
+from pathlib import Path
 
 from . import __version__, analyze, gitutil, render
 from .parser import ParseError
@@ -33,6 +35,12 @@ def build_parser():
     fmt.add_argument("--markdown", action="store_true", help="Print a reviewable Markdown draft.")
     fmt.add_argument("--json", action="store_true", help="Print one JSON document.")
     p.add_argument(
+        "--output",
+        "--save",
+        metavar="PATH",
+        help="Save Markdown/JSON to a new file atomically; never overwrite an existing path.",
+    )
+    p.add_argument(
         "--no-color",
         action="store_true",
         help="Disable ANSI colors (also respects NO_COLOR/non-TTY).",
@@ -40,8 +48,27 @@ def build_parser():
     return p
 
 
+def save_report(destination, text):
+    """Publish complete output without truncating or replacing an existing file."""
+    target = Path(destination).absolute()
+    descriptor, temporary = tempfile.mkstemp(prefix=".diffnote-", dir=target.parent)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            handle.write(text + "\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        # link creates the final directory entry atomically and refuses existing
+        # paths, including symlinks. The temporary file has private permissions.
+        os.link(temporary, target)
+    finally:
+        os.unlink(temporary)
+
+
 def main(argv=None):
-    args = build_parser().parse_args(argv)
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    if args.output and not (args.markdown or args.json):
+        parser.error("--output/--save requires --markdown or --json")
     try:
         cwd = gitutil.repo_root()
         patch, stats, messages, source = gitutil.read_selection(
@@ -53,7 +80,17 @@ def main(argv=None):
     except (gitutil.GitError, ParseError) as exc:
         print(f"diffnote: {exc}", file=sys.stderr)
         return 2
-    if args.json:
+    if args.output:
+        text = render.render_json(summary) if args.json else render.render_markdown(summary)
+        try:
+            save_report(args.output, text)
+        except OSError as exc:
+            print(
+                f"diffnote: cannot save report ({type(exc).__name__}); use a new writable path",
+                file=sys.stderr,
+            )
+            return 2
+    elif args.json:
         print(render.render_json(summary))
     elif args.markdown:
         print(render.render_markdown(summary))

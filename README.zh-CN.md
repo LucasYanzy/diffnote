@@ -18,11 +18,28 @@ diff 告诉你改了什么，PR 还需要有用的解释。diffnote 先从所选
 
 需要 macOS / Linux、Python 3.11+ 与 Git 2.31+。演示使用临时合成 Git 数据，安装可能下载构建工具。
 
+`0.2` 源码位于 `noah/diffnote` 分支，仓库默认 `main` 仍是旧 `0.1` 接口。请明确选择分支：
+
 ```bash
+git clone --branch noah/diffnote https://github.com/LucasXlab/diffnote.git
+cd diffnote
 python3 -m venv .venv
-.venv/bin/python -m pip install .
-.venv/bin/python scripts/demo.py
+. .venv/bin/activate
+python -m pip install .
+python scripts/demo.py
 ```
+
+保持环境已激活，进入自己的项目，确认要描述的改动：
+
+```bash
+cd /absolute/path/to/your/repo
+git diff --cached --stat
+diffnote --staged --markdown --output pr-draft.md
+```
+
+打开 `pr-draft.md`，核对文件和增删行数，再补上**为什么改**以及实际做过的验证。没有选中改动时得到空草稿，不表示整个工作区没有改动。`--output`（别名 `--save`）以私有权限新建文件，拒绝覆盖已有文件；分析报错不创建输出。下一份草稿请换文件名。
+
+`0.2` 接口不调用模型，不提供旧版 `--llm`、`--color`；保留 `--no-color`、Markdown 与 JSON。CLI 报告文字目前使用英文。
 
 ## 实际使用
 
@@ -32,7 +49,7 @@ python3 -m venv .venv
 diffnote --staged --markdown
 ```
 
-先激活 `.venv`。此命令只选暂存区；不加 `--staged` 时检查已跟踪工作树，包含已暂存修改。未跟踪文件只有暂存后才进入报告。
+此命令只选暂存区；不加 `--staged` 时检查已跟踪工作树，包含已暂存修改。未跟踪文件只有暂存后才进入报告。
 
 ### 选择分支比较，或导出结构化结果
 

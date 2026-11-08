@@ -4,15 +4,12 @@
 
 # diffnote
 
+Install the current source from the explicit `noah/diffnote` branch as shown in the [README](../README.md#quick-start). `main` still contains the older interface.
+
+To save a draft, use `diffnote --staged --markdown --output pr-draft.md` (or `--save`). Output must be Markdown or JSON. Files are created privately and atomically; existing files and symlinks are refused. Analysis errors leave no new report. Review the generated facts and add intent and actual validation before publishing.
+
 **Start a PR description from the change in front of you.**
 
-<p align="center">
-<img src="../assets/badges/source.svg" alt="Source 0.1.0">
-<img src="../assets/badges/python.svg" alt="Python 3.11+">
-<img src="../assets/badges/license.svg" alt="MIT license">
-<img src="../assets/badges/ci.svg" alt="CI prepared">
-<img src="../assets/badges/stars.svg" alt="Stars pending">
-</p>
 
 Turn local Git changes into a reviewable draft with changed areas, file metadata, line counts, and traceable review signals. No model, API key, or server is required.
 
@@ -22,7 +19,7 @@ Turn local Git changes into a reviewable draft with changed areas, file metadata
 
 Real local CLI capture rendered as readable panels; the GIF adds 8–10 second reading holds and paginates JSON. No typing or CLI output is invented. [Static hero](../assets/demo.png) · [Unmodified cast](../assets/recording/showcase.cast) · [Full transcript](../assets/recording/showcase.txt) · [Sources and reproduction](../docs/showcase.md).
 
-The five local badges describe source metadata and prepared configuration. CI has no claimed remote result; Stars are pending.
+See the repository's Actions tab for current workflow results.
 ## From a diff to a useful first draft
 
 You have changed a function and its test. `git diff --stat` shows the size; diffnote groups the visible changes into a draft and points to review signals with file-level evidence. Working-tree and staged drafts derive their title from the current changes rather than an unrelated previous commit.
